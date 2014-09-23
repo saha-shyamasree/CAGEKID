@@ -1,0 +1,9 @@
+#!/bin/sh
+
+#26855
+#87401
+line=$LSB_JOBINDEX
+filelist="/nfs/ma/home/shyama/DATA/CAGEKID/bam/B00EY0T/whole/chrysalis/quantifyGraph_commands"
+command=`awk '{ if (NR==$line) print $0 }' $filelist`
+
+$command

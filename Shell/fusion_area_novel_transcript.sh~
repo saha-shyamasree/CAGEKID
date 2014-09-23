@@ -1,0 +1,82 @@
+
+#B00E4I1/AC07UWACXX/s_4/
+#B00E4HB/BC07B5ACXX/s_7/
+#B00E4HE/BC07B5ACXX/s_6/
+#B00E4JC/BC0MLYACXX/s_1/
+#B00EY1B/AC0MFTACXX/s_2/
+#B00EY1X/C11D6ACXX/s_2/s_2/
+#B00F3GB/C1246ACXX/s_7/s_7/
+#B00F3GC/C1246ACXX/s_6/s_6/
+picard="/nfs/ma/home/shyama/installed_soft/picard-tools-1.72/"
+sampath="/nfs/ma/home/shyama/installed_soft/samtools-0.1.18/samtools"
+outpath="/nfs/ma/home/shyama/DATA/CAGEKID/data/tumor/"
+path="/nfs/ma/home/johan/DATA/CAGEKID/RNASEQ_MAPPED/"
+bam="accepted_hits.bam"
+samtofq=""
+chr1="4"
+bsubout="/nfs/ma/home/shyama/outputs/CAGEKID/"
+#raw/RNASEQ_APR2012/B00E4JC/BC0MLYACXX/003
+#java -jar SamToFastq.jar INPUT=/nfs/ma/home/shyama/DATA/CAGEKID/data/tumor/B00E4HB/4.sam FASTQ=/nfs/ma/home/shyama/DATA/CAGEKID/data/tumor/B00E4HB/s_1.fastq SECOND_END_FASTQ=/nfs/ma/home/shyama/DATA/CAGEKID/data/tumor/B00E4HB/s_2.fastq INCLUDE_NON_PF_READS=true VALIDATION_STRINGENCY=SILENT
+
+for i in "B00E4HB/BC07B5ACXX/s_7/" "B00E4HE/BC07B5ACXX/s_6/" "B00E4I1/AC07UWACXX/s_4/" "B00E4JC/BC0MLYACXX/s_1/" "B00EY1B/AC0MFTACXX/s_2/" "B00EY1X/C11D6ACXX/s_2/s_2/" "B00F3GB/C1246ACXX/s_7/s_7/" "B00F3GC/C1246ACXX/s_6/s_6/"
+do
+    echo $i
+    sample=`echo $i | cut -d '/' -f 1`
+    echo $sample
+    #mkdir $outpath$sample
+    #$sampath view $path$i$bam $chr1 > $outpath$sample"/"$chr1".sam"
+    #mkdir $bsubout$sample
+    #bsub -o $bsubout$sample"/samTofastq.out" java -jar $picard"SamToFastq.jar" INPUT=$outpath$sample"/"$chr1".sam" FASTQ=$outpath$sample"/s_chr"$chr1"_1.fastq" SECOND_END_FASTQ=$outpath$sample"/s_chr"$chr1"_2.fastq" INCLUDE_NON_PF_READS=true VALIDATION_STRINGENCY=SILENT
+	bsub -o $bsubout$sample"/trinity_chr"$chr1".out" -M 20000 -R "rusage[mem=20000]" sh "/nfs/ma/home/shyama/code/CAGEKID/Shell/pre_post_trinityRun.sh" $sample "null" "s_chr"$chr1"_" "null" "tumor"
+done
+
+
+chr1="17"
+#B00E4HL,B00E4I2,B00E4I5,B00EY02,B00EY0J,B00EY19
+
+for i in "B00E4HL/BC07B5ACXX/s_4/" "B00E4I2/AC07UWACXX/s_3/" "B00E4I5/AC07UWACXX/s_2/" "B00EY02/BC0MLYACXX/s_5/" "B00EY0J/C0MP5ACXX/s_5/" "B00EY19/C0MP5ACXX/s_5/s_5/"
+do
+    echo $i
+    sample=`echo $i | cut -d '/' -f 1`
+    echo $sample
+#    mkdir $outpath$sample
+#    $sampath view $path$i$bam $chr1 > $outpath$sample"/"$chr1".sam"
+    #mkdir $bsubout$sample
+    #bsub -o $bsubout$sample"/samTofastq.out" java -jar $picard"SamToFastq.jar" INPUT=$outpath$sample"/"$chr1".sam" FASTQ=$outpath$sample"/s_chr"$chr1"_1.fastq" SECOND_END_FASTQ=$outpath$sample"/s_chr"$chr1"_2.fastq" INCLUDE_NON_PF_READS=true VALIDATION_STRINGENCY=SILENT
+	bsub -o $bsubout$sample"/trinity_chr"$chr1".out" sh "/nfs/ma/home/shyama/code/CAGEKID/Shell/pre_post_trinityRun.sh" $sample "null" "s_chr"$chr1"_" "null" "tumor"
+done
+
+chr1="19"
+chr2="10"
+#B00E4I4,B00EXZJ
+#
+for i in "B00E4I4/AC07UWACXX/s_3/" "B00EXZJ/AC0MJBACXX/s_5/"
+do
+    echo $i
+    sample=`echo $i | cut -d '/' -f 1`
+    echo $sample
+#    mkdir $outpath$sample
+#    $sampath view $path$i$bam $chr1 > $outpath$sample"/"$chr1".sam"
+#    $sampath view $path$i$bam $chr2 > $outpath$sample"/"$chr2".sam"
+#    mkdir $bsubout$sample
+#    bsub -o $bsubout$sample"/samTofastq"$chr1".out" java -jar $picard"SamToFastq.jar" INPUT=$outpath$sample"/"$chr1".sam" FASTQ=$outpath$sample"/s_chr"$chr1"_1.fastq" SECOND_END_FASTQ=$outpath$sample"/s_chr"$chr1"_2.fastq" INCLUDE_NON_PF_READS=true VALIDATION_STRINGENCY=SILENT
+#    bsub -o $bsubout$sample"/samTofastq"$chr1".out" java -jar $picard"SamToFastq.jar" INPUT=$outpath$sample"/"$chr2".sam" FASTQ=$outpath$sample"/s_chr"$chr2"_1.fastq" SECOND_END_FASTQ=$outpath$sample"/s_chr"$chr2"_2.fastq" INCLUDE_NON_PF_READS=true VALIDATION_STRINGENCY=SILENT
+	bsub -o $bsubout$sample"/trinity_chr"$chr1".out" sh pre_post_trinityRun.sh $sample "null" "s_chr"$chr1"_" "null" "tumor"
+	bsub -o $bsubout$sample"/trinity_chr"$chr1".out" sh "/nfs/ma/home/shyama/code/CAGEKID/Shell/pre_post_trinityRun.sh" $sample "null" "s_chr"$chr2"_" "null" "tumor"
+done
+
+
+chr1="19"
+#B00E4HE,B00E4I3,B00EY0R,B00F3GE
+
+for i in "B00E4HE/BC07B5ACXX/s_6/" "B00E4I3/AC07UWACXX/s_2/" "B00EY0R/AC0MFTACXX/s_2/" "B00F3GE/C1246ACXX/s_6/s_6/"
+do
+    echo $i
+    sample=`echo $i | cut -d '/' -f 1`
+    echo $sample
+    #mkdir $outpath$sample
+    #$sampath view $path$i$bam $chr1 > $outpath$sample"/"$chr1".sam"
+    #mkdir $bsubout$sample
+    #bsub -o $bsubout$sample"/samTofastq"$chr1".out" java -jar $picard"SamToFastq.jar" INPUT=$outpath$sample"/"$chr1".sam" FASTQ=$outpath$sample"/s_chr"$chr1"_1.fastq" SECOND_END_FASTQ=$outpath$sample"/s_chr"$chr1"_2.fastq" INCLUDE_NON_PF_READS=true VALIDATION_STRINGENCY=SILENT
+	bsub -o $bsubout$sample"/trinity_chr"$chr1".out" sh "/nfs/ma/home/shyama/code/CAGEKID/Shell/pre_post_trinityRun.sh" $sample "null" "s_chr"$chr1"_" "null" "tumor"
+done
